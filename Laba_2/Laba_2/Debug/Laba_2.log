@@ -1,0 +1,5 @@
+﻿  TMenu.cpp
+C:\Users\user\source\repos\Laba_2\Laba_2\TMenu.cpp(25,22): error C2440: =: невозможно преобразовать "void (__cdecl *)(void)" в "void (__cdecl *)(TMenu &)"
+C:\Users\user\source\repos\Laba_2\Laba_2\TMenu.cpp(25,18): message : Для преобразования требуется reinterpret_cast, приведение в стиле С или приведение в стиле функции
+C:\Users\user\source\repos\Laba_2\Laba_2\TMenu.cpp(66,45): warning C4305: аргумент: усечение из "int" в "WORD"
+C:\Users\user\source\repos\Laba_2\Laba_2\TMenu.cpp(66,39): warning C4309: аргумент: усечение константного значения

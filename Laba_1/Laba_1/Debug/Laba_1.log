@@ -1,0 +1,23 @@
+﻿  somecode.cpp
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(40,29): error C4576: Тип в круглых скобках, за которым следует список инициализаторов, не является стандартным синтаксисом явного преобразования типа.
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(55,31): error C4576: Тип в круглых скобках, за которым следует список инициализаторов, не является стандартным синтаксисом явного преобразования типа.
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(55,29): error C2397: Преобразование из "int" в "SHORT" требует сужающего преобразования.
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(59,41): error C4576: Тип в круглых скобках, за которым следует список инициализаторов, не является стандартным синтаксисом явного преобразования типа.
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(59,28): error C2397: Преобразование из "int" в "SHORT" требует сужающего преобразования.
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(61,16): warning C4474: "printf" : для строки формата передано слишком много аргументов
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(61,16): message : заполнители и их параметры ожидают переменное число аргументов в количестве 0, но было предоставлено 1
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(62,79): error C4576: Тип в круглых скобках, за которым следует список инициализаторов, не является стандартным синтаксисом явного преобразования типа.
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(62,61): error C2397: Преобразование из "size_t" в "SHORT" требует сужающего преобразования.
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(62,79): warning C4267: инициализация: преобразование из "size_t" в "SHORT"; возможна потеря данных
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(62,66): error C2397: Преобразование из "int" в "SHORT" требует сужающего преобразования.
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(80,58): warning C4302: приведение типов: усечение из "void *" к "char"
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(80,58): error C2440: =: невозможно преобразовать "char" в "char *"
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(80,37): message : Для преобразования из целого типа в указатель требуется reinterpret_cast, приведение в стиле С или приведение в стиле функции
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(87,37): error C2440: =: невозможно преобразовать "const char [11]" в "char *"
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(87,25): message : При преобразовании из строкового литерала теряется квалификатор (см. /Zc:strictStrings)
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(108,40): error C2440: =: невозможно преобразовать "int" в "int *"
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(108,19): message : Для преобразования из целого типа в указатель требуется reinterpret_cast, приведение в стиле С или приведение в стиле функции
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(111,10): warning C4473: "printf": передано недостаточно аргументов для строки формата
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(111,10): message : заполнители и их параметры ожидают переменное число аргументов в количестве 1, но было предоставлено 0
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(111,10): message : отсутствующий вариативный аргумент "1" требуется для строки форматирования "%d"
+C:\Users\user\source\repos\Laba_1\Laba_1\somecode.cpp(120,10): warning C4477: "printf": в строке форматирования "%d" требуется аргумент типа "int", но вариативный аргумент "1" имеет тип "int *"
