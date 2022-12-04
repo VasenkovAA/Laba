@@ -1,0 +1,2 @@
+﻿source.obj : error LNK2005: "int __cdecl constractMenu(void *,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *,int)" (?constractMenu@@YAHPAXPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z) уже определен в Laba_3.obj
+C:\Users\user\source\repos\Laba_3\Debug\Laba_3.exe : fatal error LNK1169: обнаружен многократно определенный символ - один или более
