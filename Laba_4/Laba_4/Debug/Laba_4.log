@@ -1,0 +1,5 @@
+﻿  MenuFunctions.cpp
+C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(62,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(247,54): warning C4267: =: преобразование из "size_t" в "SHORT"; возможна потеря данных
+C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(315,10): warning C4101: SwapCounter: неиспользованная локальная переменная
+  Laba_4.vcxproj -> C:\Users\user\source\repos\Laba_4\Debug\Laba_4.exe
