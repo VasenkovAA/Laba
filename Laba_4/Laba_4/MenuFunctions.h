@@ -3,6 +3,7 @@
 #include <windows.h>
 struct SettingsStruct;
 struct SortFunction;
+int FileExists(const char* fname);
 void CreateSettingsConsoleForMenu(SettingsStruct* set);
 void MainMenuShow(SettingsStruct* set);
 void ExperimentsMenuShow(SettingsStruct* set);
@@ -66,16 +67,15 @@ struct SettingsStruct {
 
 };
 struct SortFunction {
-	int TimeSec = 0;
-	int TimeTakt = 0;
-	int SwapCounter = 0;
-	int ComparisonCounter = 0;
-	std::string SortName = "";
-	int SlowdownSwap = 0;
-	int SlowdownComparison = 0;
-	int SlowdownTime = 0;
-
-
-	int* Array;
+	int TimeSec;
+	int TimeTakt;
+	int SwapCounter;
+	int ComparisonCounter;
+	std::string SortName;
+	int SlowdownSwap;
+	int SlowdownComparison;
+	int SlowdownTime;
+	
 	int ArraySize;
+	int* Array;
 };

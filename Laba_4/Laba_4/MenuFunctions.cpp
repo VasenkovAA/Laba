@@ -3,7 +3,9 @@
 #include <conio.h>
 #include <iomanip>
 #include "MenuFunctions.h"
-
+#include <string>
+#include <string.h>
+#include <io.h>
 
 void CreateSettingsConsoleForMenu(SettingsStruct* set) {
 	SetConsoleCP(1251);         // установка кодовой страницы win-cp 1251 в поток ввода
@@ -31,7 +33,10 @@ void CreateSettingsConsoleForUser(SettingsStruct* set) {
 	// очищаем экран, чтобы настройка цвета применилась
 	system("cls");
 }
-
+bool FileExists(std::string fname)
+{
+	return not(_access(fname.c_str(), 0));
+}
 void InputArray(SettingsStruct* set)
 {
 	set->SortMass = 0;
@@ -68,7 +73,7 @@ void InputRandomArray(SettingsStruct* set)
 		set->array = (int*)malloc(sizeof(int) * (set->arraySize));
 		for (int i = 0;i < set->arraySize;i++)
 		{
-			set->array[i] = 1 + rand() % 4000;
+			set->array[i] =rand();
 			std::cout << set->array[i] << " ";
 		}
 		system("pause");
@@ -79,11 +84,15 @@ void InputRandomArray(SettingsStruct* set)
 		set->arraySize = 0;
 	}
 }
-//-
 void InputPartToFile(SettingsStruct* set)
 {
-	std::cout << "InputPartToFile" << std::endl;
+	CreateSettingsConsoleForUser(set);
+	std::cout << "ВВедите путь к файлу:" << std::endl;
+	std::cin >> set->PartToFile;
+	if (FileExists(set->PartToFile)) { std::cout << "Путь успешно задан" << std::endl; }
+	else {std::cout << "Файла не существует, но путь задан..." << std::endl;}
 	system("pause");
+	CreateSettingsConsoleForMenu(set);
 }
 //-
 void InputArrayFromFile(SettingsStruct* set)
@@ -118,9 +127,12 @@ int BinarySearch(int * Mass,int MassSize, int key) {
 	else {return -1;}
 }
 void SortArrayByBubbleMetod(SortFunction *Tmp, int First, int Last) {
+	Tmp->SortName = "Bubble";
+
 	int temp;
 	for (int i = 0; i < Tmp->ArraySize - 1; i++) {
 		for (int j = 0; j < Tmp->ArraySize - i - 1; j++) {
+			Tmp->ComparisonCounter++;
 			if (Tmp->Array[j] > Tmp->Array[j + 1]) {
 				temp = Tmp->Array[j];
 				Tmp->Array[j] = Tmp->Array[j + 1];
@@ -132,18 +144,21 @@ void SortArrayByBubbleMetod(SortFunction *Tmp, int First, int Last) {
 }
 void SortArrayByHoarMetod(SortFunction* Tmp,int First, int Last)
 {
+	Tmp->SortName = "Hoar";
 	int i = First, j = Last;
 	int tmp, x = Tmp->Array[(First + Last) / 2];
 	do {
-		while (Tmp->Array[i] < x)
+		while (Tmp->Array[i] < x) 
 			i++;
 		while (Tmp->Array[j] > x)
 			j--;
-
+		Tmp->ComparisonCounter++;
 		if (i <= j)
 		{
+			Tmp->ComparisonCounter++;
 			if (i < j)
 			{
+
 				tmp = Tmp->Array[i];
 				Tmp->Array[i] = Tmp->Array[j];
 				Tmp->Array[j] = tmp;
@@ -164,13 +179,16 @@ void SortArrayByHoarMetod(SortFunction* Tmp,int First, int Last)
 	}
 }
 void SortArrayBySelectionMethod(SortFunction* Tmp, int First, int Last) {
+	Tmp->SortName = "Selection";
 	int minPosition,tmp;
 	for (int i = 0; i < Tmp->ArraySize; i++)
 	{
 		minPosition = i;
-		for (int j = i + 1; j < Tmp->ArraySize; j++)
+		for (int j = i + 1; j < Tmp->ArraySize; j++) {
 			if (Tmp->Array[minPosition] > Tmp->Array[j])
 				minPosition = j;
+			Tmp->ComparisonCounter++;
+		}
 		tmp = Tmp->Array[minPosition];
 		Tmp->Array[minPosition] = Tmp->Array[i];
 		Tmp->Array[i] = tmp;
@@ -178,42 +196,98 @@ void SortArrayBySelectionMethod(SortFunction* Tmp, int First, int Last) {
 	}
 }
 void SortArrayByInsertMethod(SortFunction* Tmp, int First, int Last) {
+	Tmp->SortName = "Insert";
 	for (int i = 0 + 1;i < Tmp->ArraySize;i++) {
 		for (int j = i; j > 0 && Tmp->Array[j - 1] > Tmp->Array[j];j--) {
 			Tmp->SwapCounter++;
+			Tmp->ComparisonCounter++;
 			int tmp = Tmp->Array[j - 1];
 			Tmp->Array[j - 1] = Tmp->Array[j];
 			Tmp->Array[j] = tmp;
 		}
+		Tmp->ComparisonCounter++;
 	}
 }
-//-
+
 void SortComparison(SettingsStruct* set)
 {
-	SortFunction Tmp;
-	Tmp.ArraySize = set->arraySize;
+	if (set->arraySize > 1) {
+		SortFunction* SettingsSortFunctionMass;
+		unsigned __int64 TaktFirst, TaktLast;
+		unsigned int stop_time, start_time;
+		SettingsSortFunctionMass = new SortFunction[10];
+		for (int j = 0; j < set->SortMenuSize - 1; j++) {
+			SettingsSortFunctionMass[j].ArraySize = set->arraySize;
+			SettingsSortFunctionMass[j].Array = (int*)malloc(SettingsSortFunctionMass[j].ArraySize * sizeof(int));
+			SettingsSortFunctionMass[j].SwapCounter = 0;
+			SettingsSortFunctionMass[j].ComparisonCounter = 0;
+			memcpy((SettingsSortFunctionMass[j].Array), (set->array), set->arraySize * sizeof(int));
+			start_time = clock();
+			TaktFirst = __rdtsc();
+			set->SortMenuFucntions[j](&SettingsSortFunctionMass[j], 0, SettingsSortFunctionMass[j].ArraySize - 1);
+			TaktLast = __rdtsc();
+			stop_time = clock();
+			SettingsSortFunctionMass[j].TimeTakt = TaktLast - TaktFirst;
+			SettingsSortFunctionMass[j].TimeSec = stop_time - start_time;
+			std::cout << SettingsSortFunctionMass[j].SortName << " - Sorted - "
+				<< SettingsSortFunctionMass[j].TimeSec<<"мСек" << std::endl;
+		}
+		int minSwap = SettingsSortFunctionMass[0].SwapCounter,
+			minComparsion = SettingsSortFunctionMass[0].ComparisonCounter,
+			minTime = SettingsSortFunctionMass[0].TimeSec;
+		for (int j = 0; j < set->SortMenuSize - 1;j++) {
+			if (SettingsSortFunctionMass[j].SwapCounter < minSwap) minSwap = SettingsSortFunctionMass[j].SwapCounter;
+			if (SettingsSortFunctionMass[j].ComparisonCounter < minComparsion) minComparsion = SettingsSortFunctionMass[j].ComparisonCounter;
+			if ((SettingsSortFunctionMass[j].TimeSec < minTime) && (set->arraySize > 1500))
+			{
+				minTime = SettingsSortFunctionMass[j].TimeSec;
+			}
+			else
+			{
+				if (SettingsSortFunctionMass[j].TimeTakt < minTime) { minTime = SettingsSortFunctionMass[j].TimeTakt; }
+			}
+		}
+		for (int i = 0; i < set->SortMenuSize - 1;i++) {
+			if (set->arraySize < 1500) {
+				if (minTime != 0) {
+					SettingsSortFunctionMass[i].SlowdownTime = SettingsSortFunctionMass[i].TimeTakt / minTime;
+				}
+				else { SettingsSortFunctionMass[i].SlowdownTime = -1; }
+			}
+			else {
+				SettingsSortFunctionMass[i].SlowdownTime = SettingsSortFunctionMass[i].TimeSec / minTime;
+			}
+		}
+		std::cout << std::endl;
+		std::cout << std::endl;
+		std::cout << std::left << std::setw(12) << "Sort name" << std::setw(12)
+			<< std::setw(12) << "Takt"
+			<< std::setw(5) << "Sec"
+			<< std::setw(8) << "Sl time"
+			<< std::setw(9) << "Swap"
+			<< std::setw(8) << "Sl swap"
+			<< std::setw(11) << "Comparison"
+			<< std::setw(9) << "Sl comparison"
+			<< std::endl;
+		for (int i = 0;i < set->SortMenuSize - 1; i++) {
+			std::cout << std::left << std::setw(12) << SettingsSortFunctionMass[i].SortName << std::setw(12)
+				<< std::setw(12) << SettingsSortFunctionMass[i].TimeTakt
+				<< std::setw(5) << SettingsSortFunctionMass[i].TimeSec
+				<< std::setw(8) << SettingsSortFunctionMass[i].SlowdownTime
+				<< std::setw(9) << SettingsSortFunctionMass[i].SwapCounter
+				<< std::setw(8) << SettingsSortFunctionMass[i].SwapCounter / minSwap
+				<< std::setw(11) << SettingsSortFunctionMass[i].ComparisonCounter
+				<< std::setw(9) << SettingsSortFunctionMass[i].ComparisonCounter / minComparsion
+				<< std::endl;
 
-	
-	    memmove(&(Tmp.Array),&(set->array),sizeof(set->array));
-		Tmp.Array[0] = 0;
-		for (int j = 0;j < Tmp.ArraySize ;j++) {
-			std::cout << set->array[j] << std::endl;
-			
-		}system("pause");
-		set->SortMenuFucntions[0](&Tmp,0,Tmp.ArraySize-1);
-		
-		std::cout << Tmp.SwapCounter<<std::endl;
+		}
+		std::cout << std::endl;
 		system("pause");
-		Tmp.SwapCounter = 0;
-
-	system("pause");
-}
-
-//-
-void EfficiencyComparison(SettingsStruct* set)
-{
-	std::cout << "EfficiencyComparison" << std::endl;
-	system("pause");
+	}
+	else {
+		std::cout << "Думаю, прежде чем сортировать массив его нужно создать, нет?" << std::endl;
+		system("pause");
+	}
 }
 
 int constractMenu(HANDLE hStdOut, std::string* menu_names, int menu_size) {
@@ -252,6 +326,54 @@ int constractMenu(HANDLE hStdOut, std::string* menu_names, int menu_size) {
 	}
 	system("cls");
 	return choose_pos;
+}
+
+void EfficiencyComparison(SettingsStruct* set)
+{
+	bool flag = 1;
+	int Index = 0;
+
+	while (flag) {
+		Index = constractMenu(set->hStdOut, set->SortMenu, set->SortMenuSize);
+		if (Index < set->SortMenuSize - 1) {
+			SortFunction Tmp;
+			CreateSettingsConsoleForUser(set);
+			std::cout << "Какое число элементов должно быть в массиве, сударь(сударыня)?" << std::endl;
+			std::cin >> Tmp.ArraySize;
+			CreateSettingsConsoleForMenu(set);
+			int First = 0;
+			int Last = Tmp.ArraySize - 1;
+			if (Tmp.ArraySize > 0) {
+				Tmp.Array = (int*)malloc(sizeof(int)*Tmp.ArraySize);
+				for (int i = 0;i < Tmp.ArraySize;i++)
+				{
+					Tmp.Array[i] = rand();
+				}
+				Tmp.SwapCounter = 0;
+				Tmp.ComparisonCounter = 0;
+				unsigned __int64 TaktFirst, TaktLast;
+				unsigned int start_time = clock();
+				TaktFirst = __rdtsc();
+				set->SortMenuFucntions[Index](&Tmp, First, Last);
+				TaktLast = __rdtsc();
+				unsigned int stop_time = clock();
+				std::cout << std::endl;
+				std::cout << "Количество перестановок: " << Tmp.SwapCounter << std::endl;
+				std::cout << "Количество тактов процессора: " << TaktLast - TaktFirst << std::endl;
+				std::cout << "Количество времени: " << stop_time - start_time << std::endl;
+				std::cout << "Количество сравнений: " << Tmp.ComparisonCounter << std::endl;
+				system("pause");
+			}
+			else {
+				std::cout << "Было бы славно если бы длина массива была больше 0, прежде чем его сортировать" << std::endl;
+				system("pause");
+			}
+		}
+		else {
+			flag = 0;
+		}
+	
+	}
 }
 
 void ExperimentsMenuShow(SettingsStruct* set) {
