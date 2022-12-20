@@ -1,12 +1,12 @@
 ﻿
 #include <iostream>
 #include "MenuFunctions.h"
-int main()
+
+int main(int argc, char* argv[])
 {
-    std::cout << "Hello World!\n";
-    
     SettingsStruct set;
+    set.PartToFile = SplitFilename(argv[0]);
     CreateSettingsConsoleForMenu(&set);
     MainMenuShow(&set);
-    
 }
+ 

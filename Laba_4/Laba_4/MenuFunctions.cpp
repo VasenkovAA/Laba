@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <windows.h>
 #include <conio.h>
@@ -6,6 +7,9 @@
 #include <string>
 #include <string.h>
 #include <io.h>
+#include <fstream>
+#include <stdio.h>
+#include <stdlib.h>
 
 void CreateSettingsConsoleForMenu(SettingsStruct* set) {
 	SetConsoleCP(1251);         // установка кодовой страницы win-cp 1251 в поток ввода
@@ -36,6 +40,19 @@ void CreateSettingsConsoleForUser(SettingsStruct* set) {
 bool FileExists(std::string fname)
 {
 	return not(_access(fname.c_str(), 0));
+}
+std::string SplitFilename(const std::string& str)
+{
+	std::size_t found = str.find_last_of("/\\");
+	return str.substr(0, found);
+}
+void PrintArrayToFile(int* Array, int ArraySize,std::string PartToFile) {
+	FILE *S1;
+	S1 = fopen(PartToFile.c_str(), "w");
+	for (int i = 0; i < ArraySize;i++) {
+		fprintf(S1, "%d\n", Array[i]);
+	}
+	fclose(S1);
 }
 void InputArray(SettingsStruct* set)
 {
@@ -72,10 +89,8 @@ void InputRandomArray(SettingsStruct* set)
 	if (set->arraySize > 0) {
 		set->array = (int*)malloc(sizeof(int) * (set->arraySize));
 		for (int i = 0;i < set->arraySize;i++)
-		{
-			set->array[i] =rand();
-			std::cout << set->array[i] << " ";
-		}
+		{set->array[i] =rand();}
+		if (set->arraySize < 1000) { PrintArray(set); }
 		system("pause");
 		system("cls");
 	}else {
@@ -87,18 +102,62 @@ void InputRandomArray(SettingsStruct* set)
 void InputPartToFile(SettingsStruct* set)
 {
 	CreateSettingsConsoleForUser(set);
-	std::cout << "ВВедите путь к файлу:" << std::endl;
+	std::cout << "ВВедите путь к рабочей директории:" << std::endl;
 	std::cin >> set->PartToFile;
-	if (FileExists(set->PartToFile)) { std::cout << "Путь успешно задан" << std::endl; }
-	else {std::cout << "Файла не существует, но путь задан..." << std::endl;}
-	system("pause");
+	std::cout << "Путь успешно задан" << std::endl; 
 	CreateSettingsConsoleForMenu(set);
 }
-//-
 void InputArrayFromFile(SettingsStruct* set)
 {
-	std::cout << "InputArrayFromFile" << std::endl;
+	CreateSettingsConsoleForUser(set);
+	if (FileExists(set->PartToFile+"\input.txt")) {
+		std::cout << "ВВедите количество элементов, которое будет прочитано из файла" << std::endl;
+		std::cout << "Ичпользуется файл:" << set->PartToFile + "\input.txt" << std::endl;
+		std::cin >> set->arraySize;
+		int i = 0;
+		if (set->arraySize > 0) {
+			try {
+				set->array = (int*)malloc(set->arraySize * sizeof(int));
+				for (int j = 0;j < set->arraySize;j++) {
+					set->array[j] = 0;
+				}
+				std::ifstream f(set->PartToFile + "\input.txt");
+				bool TmpFlag = 0;
+				while (f >> set->array[i]) {
+					i++;
+					if (i > set->arraySize) 
+					{ 
+						TmpFlag = 1;
+						break;
+					}
+				}
+				f.close();
+				if (i < set->arraySize) {
+					std::cout << "Колличество элементов в файле не соответствует требуемому количеству элементов массива." << std::endl;
+					std::cout << "Иными словами - в файле меньше чисел чем размерность массива, которую вы задали." << std::endl;
+					std::cout << "Поэтому все недостающие значения заменены на 0." << std::endl;
+				}
+				if (TmpFlag) {
+					std::cout << "В файле значений больше чем задан массив. Считаны только "<<set->arraySize
+						<< " значения(элемента)" << std::endl;
+				}
+			}
+			catch (const char* msg)
+			{
+				std::cout << msg << std::endl;
+			}
+
+		}
+		else {
+			std::cout << "Я ценю твою гениальность, многоуважаемый пользователь,но всеже ты мне уже изрядно надоел." << std::endl;
+			std::cout << "ВВеди длинну массива > 0" << std::endl;
+		}
+	}else{
+		std::cout << "Некоректный путь до файла "<< set->PartToFile + "\input.txt" << std::endl;
+	}
 	system("pause");
+	CreateSettingsConsoleForMenu(set);
+	
 }
 void PrintArray(SettingsStruct* set) {
 	system("cls");
@@ -468,7 +527,6 @@ void SortMenuShow(SettingsStruct* set) {
 			Tmp.ArraySize = set->arraySize;
 			int First = 0;
 			int Last = Tmp.ArraySize - 1;
-			//memcpy(Tmp.Array, set->array, set->arraySize * sizeof(int));
 			Tmp.Array = set->array;
 			if (set->SortMass) {
 				std::cout << "Массив уже отсортирован" << std::endl;
@@ -476,14 +534,21 @@ void SortMenuShow(SettingsStruct* set) {
 			}
 			else {
 				if (set->arraySize >0) {
-					int SwapCounter = 0;
+					Tmp.SwapCounter = 0;
 					unsigned __int64 TaktFirst, TaktLast;
+					if (set->arraySize < 21) { PrintArray(set); }
+					else {
+						PrintArrayToFile(set->array, set->arraySize, set->PartToFile + "\Input.txt");
+					}//-----------------
 					unsigned int start_time = clock();
 					TaktFirst = __rdtsc();
 					set->SortMenuFucntions[Index](&Tmp,First, Last);
 					TaktLast = __rdtsc();
 					unsigned int stop_time = clock();
-					PrintArray(set);
+					if (set->arraySize < 21) { PrintArray(set); }
+					else {
+						PrintArrayToFile(set->array, set->arraySize, set->PartToFile + "\Output.txt");
+					}//-----------------
 					std::cout << std::endl;
 					std::cout << "Количество перестановок: " << Tmp.SwapCounter << std::endl;
 					std::cout << "Количество тактов процессора: " << TaktLast - TaktFirst << std::endl;

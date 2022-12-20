@@ -3,7 +3,8 @@
 #include <windows.h>
 struct SettingsStruct;
 struct SortFunction;
-int FileExists(const char* fname);
+bool FileExists(std::string fname);
+std::string SplitFilename(const std::string& str);
 void CreateSettingsConsoleForMenu(SettingsStruct* set);
 void MainMenuShow(SettingsStruct* set);
 void ExperimentsMenuShow(SettingsStruct* set);
