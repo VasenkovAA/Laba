@@ -10,6 +10,9 @@
 #include <fstream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <cstdlib>
+#include <sstream>
+#include <cstring>
 
 void CreateSettingsConsoleForMenu(SettingsStruct* set) {
 	SetConsoleCP(1251);         // установка кодовой страницы win-cp 1251 в поток ввода
@@ -266,6 +269,22 @@ void SortArrayByInsertMethod(SortFunction* Tmp, int First, int Last) {
 		}
 		Tmp->ComparisonCounter++;
 	}
+}
+void SortArrayByUserMetod(SettingsStruct* set) {
+	std::string PartToUserFile;
+	std::stringstream stream;
+	std::cout << "Для использования этой функции вам нужно ознакомится с правилами написания своей сортировки." 
+		<<"Найти в это можете в пособии для имбицила(Да, да специально для вас было написано)" << std::endl;
+	if (FileExists(set->PartToPythonCompiler+".exe")) {
+		std::cout <<"Путь к компилятору: " << set->PartToPythonCompiler << std::endl;
+		std::cout << "ВВедите путь к своему 'Творению':" << std::endl;
+		std::cin >> PartToUserFile;
+
+		stream << set->PartToPythonCompiler << " " << PartToUserFile<< " > " << "C:\output.txt";
+		system(stream.str().c_str());
+
+	}else { std::cout << "Файл компилтора не найден, скорее всего вы с3.14здили программу в виде .exe фвала и не посмотрели зависимости" << std::endl;}
+	system("pause");
 }
 
 void SortComparison(SettingsStruct* set)

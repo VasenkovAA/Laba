@@ -1,12 +1,12 @@
 ﻿  MenuFunctions.cpp
-C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(84,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(113,33): warning C4129: i: неизвестная escape-последовательность
-C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(115,74): warning C4129: i: неизвестная escape-последовательность
-C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(124,39): warning C4129: i: неизвестная escape-последовательность
-C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(156,87): warning C4129: i: неизвестная escape-последовательность
-C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(289,52): warning C4244: =: преобразование "unsigned __int64" в "int", возможна потеря данных
-C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(380,54): warning C4267: =: преобразование из "size_t" в "SHORT"; возможна потеря данных
-C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(496,10): warning C4101: SwapCounter: неиспользованная локальная переменная
-C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(541,70): warning C4129: I: неизвестная escape-последовательность
-C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(550,70): warning C4129: O: неизвестная escape-последовательность
+C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(87,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(116,33): warning C4129: i: неизвестная escape-последовательность
+C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(118,74): warning C4129: i: неизвестная escape-последовательность
+C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(127,39): warning C4129: i: неизвестная escape-последовательность
+C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(159,87): warning C4129: i: неизвестная escape-последовательность
+C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(306,52): warning C4244: =: преобразование "unsigned __int64" в "int", возможна потеря данных
+C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(397,54): warning C4267: =: преобразование из "size_t" в "SHORT"; возможна потеря данных
+C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(513,10): warning C4101: SwapCounter: неиспользованная локальная переменная
+C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(558,70): warning C4129: I: неизвестная escape-последовательность
+C:\Users\user\source\repos\Laba_4\Laba_4\MenuFunctions.cpp(567,70): warning C4129: O: неизвестная escape-последовательность
   Laba_4.vcxproj -> C:\Users\user\source\repos\Laba_4\Debug\Laba_4.exe

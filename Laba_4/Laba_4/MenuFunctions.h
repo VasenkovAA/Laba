@@ -24,6 +24,7 @@ void SortArrayByHoarMetod(SortFunction* Tmp, int First, int Last);
 void SortArrayBySelectionMethod(SortFunction* Tmp, int First, int Last);
 void SortArrayByInsertMethod(SortFunction* Tmp, int First, int Last);
 void SortArrayByBubbleMetod(SortFunction* Tmp, int First, int Last);
+void SortArrayByUserMetod(SettingsStruct* set);
 void SortComparison(SettingsStruct* set);
 void EfficiencyComparison(SettingsStruct* set);
 
@@ -52,9 +53,9 @@ struct SettingsStruct {
 	short SerchMenuSize = 3;
 	int(*SerchMenuFucntions[2])(int* Mass, int MassSize, int key) = { SimpleSearch,BinarySearch };
 
-	std::string SettingMenu[4] = { "Задать массив", "Посмотреть текущий массив","Изменить путь", "Взад"};
-	short SettingMenuSize = 4;
-	void(*SettingsMenuFucntions[3])(SettingsStruct* set) = { InputArrayMenuShow,PrintArray,InputPartToFile };
+	std::string SettingMenu[5] = { "Задать массив", "Посмотреть текущий массив","Изменить путь","Пользовательская сортИровка", "Взад"};
+	short SettingMenuSize = 5;
+	void(*SettingsMenuFucntions[4])(SettingsStruct* set) = { InputArrayMenuShow,PrintArray,InputPartToFile, SortArrayByUserMetod};
 
 	std::string InputArrayMenu[4] = { "Задать вручную","Сгенерировать случайно","Прочитать из файла","Взад" };
 	short InputArrayMenuSize = 4;
@@ -65,7 +66,7 @@ struct SettingsStruct {
 	bool SortMass = 0;
 
 	std::string PartToFile;
-
+	std::string PartToPythonCompiler; 
 };
 struct SortFunction {
 	int TimeSec;
